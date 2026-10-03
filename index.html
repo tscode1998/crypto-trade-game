@@ -15,7 +15,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>【無料】暗号資産トレードシミュレーター | 初心者向け仮想通貨取引ゲーム</title>
-  <meta name="description" content="専門用語なし！全取引を「日本円」だけで直感的に操作できる初心者向け暗号資産（仮想通貨）デモトレードシミュレーター。リアルタイム相場データ連動＆レバレッジ対応！">
+  <meta name="description" content="専門用語なし！全取引を「日本円」だけで直感的に操作できる初心者向け暗号資産（仮想通貨）デモトレードシミュレーター。リアルタイム相場データ連動！">
   <meta name="keywords" content="暗号資産, 仮想通貨, デモトレード, 模擬取引, ゲーム, 初心者, ビットコイン, シミュレーター">
 
   <!-- OGP Meta Tags -->
@@ -367,38 +367,6 @@
       width: 100%;
     }
 
-    /* Trade Control */
-    .leverage-selector {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 15px;
-      align-items: center;
-    }
-    .lev-btn {
-      flex: 1;
-      padding: 6px;
-      background: #EDF2F7;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      font-weight: bold;
-      font-size: 0.85rem;
-      cursor: pointer;
-    }
-    .lev-btn.active {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
-    }
-    .lev-note {
-      font-size: 0.75rem;
-      color: var(--text-sub);
-      margin-bottom: 15px;
-      background: #FFF5F5;
-      padding: 8px;
-      border-radius: 6px;
-      border-left: 3px solid var(--down-color);
-    }
-
     .trade-actions {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -613,17 +581,6 @@
             <span>日本円で注文（<span id="selected-coin-symbol">BTC</span>）</span>
           </div>
 
-          <div style="font-size:0.85rem; font-weight:bold; margin-bottom:5px;">レバレッジ設定</div>
-          <div class="leverage-selector">
-            <button class="lev-btn active" onclick="setLeverage(1, this)">1倍(通常)</button>
-            <button class="lev-btn" onclick="setLeverage(2, this)">2倍</button>
-            <button class="lev-btn" onclick="setLeverage(5, this)">5倍</button>
-            <button class="lev-btn" onclick="setLeverage(10, this)">10倍</button>
-          </div>
-          <div class="lev-note">
-            💡 <strong>レバレッジとは？</strong>：倍率を上げると少ない元手で大きな利益や損失が発生します。
-          </div>
-
           <div class="trade-actions">
             <!-- BUY -->
             <div>
@@ -686,12 +643,9 @@
       <h3>遊び方 3ステップ</h3>
       <ul>
         <li><strong>① 銘柄を選ぶ:</strong> BTC（ビットコイン）やETH（イーサリアム）など、取引したい銘柄を選択します。</li>
-        <li><strong>② 日本円で買い付ける:</strong> 「1万円分買付」などのボタンをタップして購入します。レバレッジを設定して倍率を上げることもできます。</li>
+        <li><strong>② 日本円で買い付ける:</strong> 「1万円分買付」などのボタンをタップして購入します。</li>
         <li><strong>③ タイミングを見て売却:</strong> 価格が上がったら「売却」を行って利益を確定しましょう！</li>
       </ul>
-
-      <h3>レバレッジとは？</h3>
-      <p>レバレッジとは、自分の手元資金以上の金額で取引ができる仕組みです。例えば10万円の資金で5倍のレバレッジをかけると、50万円分の取引が可能になります。利益が出た場合は大きなリターンが得られますが、価格が予想と逆に動いた場合は損失も大きくなるため、リスク管理が重要です。</p>
     </article>
 
   </div>
@@ -703,7 +657,7 @@
       <p style="font-size:0.9rem; color:var(--text-sub); margin-bottom:20px;">日本円で直感的に取引できる暗号資産デモトレードへようこそ！</p>
       
       <button class="btn-primary" style="margin-bottom:12px;" onclick="startCountdown('3min')">
-        ⏱️ 3分チャレンジモード<br>
+        ⏱️️ 3分チャレンジモード<br>
         <span style="font-size:0.75rem; font-weight:normal;">3分間でどれだけ資産を増やせるか勝負！</span>
       </button>
 
@@ -762,7 +716,6 @@
       <ol style="padding-left:20px; font-size:0.9rem; line-height:1.8;">
         <li>銘柄（BTC、ETHなど）を選びます。</li>
         <li>「1万円買付」などのボタンで日本円で買付を行います。</li>
-        <li>レバレッジ（1〜10倍）を上げると利益も損失も大きくなります。</li>
         <li>価格が上がったら「売却」して日本円に戻し利益を確定しましょう！</li>
         <li>総資産が20万円以下になると破産ゲームオーバーです。</li>
       </ol>
@@ -784,7 +737,6 @@
       timeLeft: 180,
       cash: INITIAL_CASH,
       selectedCoin: 'bitcoin',
-      leverage: 1,
       timerInterval: null,
       priceSimInterval: null,
       fetchInterval: null,
@@ -801,13 +753,13 @@
       binancecoin: { name: 'BNB (バイナンス)', symbol: 'BNB', price: 85000, history: [] }
     };
 
-    // User Holdings: coinKey -> { investedCash: number, leverage: number, entryPrice: number }
+    // User Holdings: coinKey -> { investedCash: number, entryPrice: number }
     let holdings = {
-      bitcoin: { investedCash: 0, leverage: 1, entryPrice: 0 },
-      ethereum: { investedCash: 0, leverage: 1, entryPrice: 0 },
-      ripple: { investedCash: 0, leverage: 1, entryPrice: 0 },
-      solana: { investedCash: 0, leverage: 1, entryPrice: 0 },
-      binancecoin: { investedCash: 0, leverage: 1, entryPrice: 0 }
+      bitcoin: { investedCash: 0, entryPrice: 0 },
+      ethereum: { investedCash: 0, entryPrice: 0 },
+      ripple: { investedCash: 0, entryPrice: 0 },
+      solana: { investedCash: 0, entryPrice: 0 },
+      binancecoin: { investedCash: 0, entryPrice: 0 }
     };
 
     // --- Chart Initialization ---
@@ -883,7 +835,7 @@
     function simulatePriceMicroFluctuation() {
       Object.keys(coins).forEach(key => {
         const coin = coins[key];
-        const changePercent = (Math.random() - 0.49) * 0.0015; // -0.075% 〜 +0.075%
+        const changePercent = (Math.random() - 0.5) * 0.004; // -0.2% 〜 +0.2%
         coin.price = Math.max(1, coin.price * (1 + changePercent));
         
         coin.history.push(coin.price);
@@ -912,8 +864,7 @@
         if (h.investedCash > 0) {
           const currentPrice = coins[key].price;
           const priceRatio = currentPrice / h.entryPrice;
-          const pnlRatio = (priceRatio - 1) * h.leverage;
-          const currentVal = h.investedCash * (1 + pnlRatio);
+          const currentVal = h.investedCash * priceRatio;
           totalPositionValue += Math.max(0, currentVal);
         }
       });
@@ -921,12 +872,6 @@
     }
 
     // --- Trading Operations ---
-    function setLeverage(lev, btn) {
-      gameState.leverage = lev;
-      document.querySelectorAll('.lev-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    }
-
     function executeTrade(type, amount) {
       if (!gameState.isPlaying) return;
       const coinKey = gameState.selectedCoin;
@@ -947,7 +892,6 @@
         } else {
           h.investedCash = buyAmount;
           h.entryPrice = currentPrice;
-          h.leverage = gameState.leverage;
         }
 
         gameState.cash -= buyAmount;
@@ -960,10 +904,9 @@
         }
 
         const priceRatio = currentPrice / h.entryPrice;
-        const pnlRatio = (priceRatio - 1) * h.leverage;
 
         let sellInvested = amount === 'ALL' ? h.investedCash : Math.min(amount, h.investedCash);
-        let returnCash = sellInvested * (1 + pnlRatio);
+        let returnCash = sellInvested * priceRatio;
         let profit = returnCash - sellInvested;
 
         gameState.cash += Math.max(0, returnCash);
@@ -975,7 +918,7 @@
         }
 
         const profitSign = profit >= 0 ? '+' : '';
-        const pnlPct = (pnlRatio * 100).toFixed(1);
+        const pnlPct = ((priceRatio - 1) * 100).toFixed(1);
         showToast(`${profitSign}${Math.round(profit).toLocaleString()}円 (${profitSign}${pnlPct}%) の利益/損益を確定しました`);
       }
 
@@ -989,8 +932,7 @@
         const h = holdings[key];
         if (h.investedCash > 0) {
           const priceRatio = coins[key].price / h.entryPrice;
-          const pnlRatio = (priceRatio - 1) * h.leverage;
-          totalReturned += Math.max(0, h.investedCash * (1 + pnlRatio));
+          totalReturned += Math.max(0, h.investedCash * priceRatio);
           h.investedCash = 0;
           h.entryPrice = 0;
         }
@@ -1039,7 +981,7 @@
       gameState.timeLeft = 180;
       
       Object.keys(holdings).forEach(k => {
-        holdings[k] = { investedCash: 0, leverage: 1, entryPrice: 0 };
+        holdings[k] = { investedCash: 0, entryPrice: 0 };
       });
 
       const modeBadge = document.getElementById('badge-mode-status');
@@ -1095,9 +1037,9 @@
       gameState.lastPnl = pnl;
 
       let rank = 'C';
-      if (totalAssets >= 2000000) rank = 'S';
-      else if (totalAssets >= 1500000) rank = 'A';
-      else if (totalAssets >= 1100000) rank = 'B';
+      if (totalAssets >= 1500000) rank = 'S';
+      else if (totalAssets >= 1200000) rank = 'A';
+      else if (totalAssets >= 1050000) rank = 'B';
       else if (totalAssets >= 800000) rank = 'C';
       else rank = 'D';
 
@@ -1153,13 +1095,12 @@
         if (h.investedCash > 0) {
           const currentPrice = coins[key].price;
           const priceRatio = currentPrice / h.entryPrice;
-          const pnlRatio = (priceRatio - 1) * h.leverage;
-          const currentVal = Math.round(h.investedCash * (1 + pnlRatio));
+          const currentVal = Math.round(h.investedCash * priceRatio);
           const profit = currentVal - h.investedCash;
 
           const tr = document.createElement('tr');
           tr.innerHTML = `
-            <td><strong>${coins[key].symbol}</strong> <small>(${h.leverage}倍)</small></td>
+            <td><strong>${coins[key].symbol}</strong></td>
             <td>${Math.round(h.investedCash).toLocaleString()}円</td>
             <td style="color:${profit >= 0 ? 'var(--up-color)' : 'var(--down-color)'}; font-weight:bold;">
               ${currentVal.toLocaleString()}円<br>
